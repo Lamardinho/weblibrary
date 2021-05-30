@@ -1,0 +1,11 @@
+app:
+  datasource:
+    weblibrary:
+      driver-class-name: org.postgresql.Driver
+      url: jdbc:postgresql://localhost:5454/weblibrary
+      username: postgres
+      password: postgres
+
+spring:
+  liquibase:
+    enabled: off

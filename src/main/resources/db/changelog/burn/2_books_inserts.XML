@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <!-- =========================================================================================================== -->
+    <changeSet id="fill t_public_books" author="Ilya" dbms="postgresql">
+        <comment>Наполняем t_public_books</comment>
+        <sql>
+            INSERT INTO public.t_public_books (id, author, date_release, title) VALUES (1, 'Анджей Сапковский',
+            '1986-01-30', 'Последнее желание');
+            INSERT INTO public.t_public_books (id, author, date_release, title) VALUES (2, 'Анджей Сапковский',
+            '2021-01-30', 'Меч Предназначения');
+            INSERT INTO public.t_public_books (id, author, date_release, title) VALUES (3, 'Анджей Сапковский',
+            '1994-01-30', 'Кровь эльфов');
+            INSERT INTO public.t_public_books (id, author, date_release, title) VALUES (4, 'Анджей Сапковский',
+            '1995-05-30', 'Час Презрения');
+            INSERT INTO public.t_public_books (id, author, date_release, title) VALUES (5, 'Анджей Сапковский',
+            '1996-05-30', 'Крещение огнём');
+            INSERT INTO public.t_public_books (id, author, date_release, title) VALUES (6, 'Анджей Сапковский',
+            '1997-05-30', 'Башня Ласточки');
+            INSERT INTO public.t_public_books (id, author, date_release, title) VALUES (7, 'Анджей Сапковский',
+            '1998-05-30', 'Владычица Озера');
+            INSERT INTO public.t_public_books (id, author, date_release, title) VALUES (8, 'Анджей Сапковский',
+            '2013-05-30', 'Сезон гроз');
+        </sql>
+    </changeSet>
+</databaseChangeLog>

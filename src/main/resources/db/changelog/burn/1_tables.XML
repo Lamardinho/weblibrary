@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <!-- =========================================================================================================== -->
+    <changeSet id="create tables" author="Ilya" dbms="postgresql">
+        <preConditions onFail="MARK_RAN"> <!--MARK_RAN - для того чтобы этот changeSet не запускался если такая таблица уже есть и маркировался как выполненный,
+            создаем проверку на существования какой-нибудь таблицы... для этого используем <preConditions <not>-->
+            <not>
+                <tableExists tableName="t_private_books" schemaName="public"/>
+            </not>
+        </preConditions>
+        <comment>Создаем таблицы</comment>
+        <sqlFile endDelimiter="%%%%%%%%%%%%" relativeToChangelogFile="true"
+                 path="1_tables.SQL"/>
+    </changeSet>
+</databaseChangeLog>
