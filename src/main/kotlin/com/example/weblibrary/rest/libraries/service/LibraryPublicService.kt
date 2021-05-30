@@ -1,6 +1,8 @@
 package com.example.weblibrary.rest.libraries.service
 
+import com.example.weblibrary.model.libraries.LibraryPrivate
 import com.example.weblibrary.model.libraries.LibraryPublic
+import com.example.weblibrary.module.libraries.repository.LibraryPrivateRepository
 import com.example.weblibrary.module.libraries.repository.LibraryPublicRepository
 import org.springframework.stereotype.Service
 import javax.transaction.Transactional
@@ -10,23 +12,41 @@ import javax.transaction.Transactional
  */
 @Service
 class LibraryPublicService(
-    private val repository: LibraryPublicRepository
+    private val libraryPublicRepository: LibraryPublicRepository,
+    private val libraryPrivateRepository: LibraryPrivateRepository
 ) {
     @Transactional
     fun save(book: LibraryPublic): LibraryPublic {
-        return repository.save(book)
+        return libraryPublicRepository.save(book)
     }
 
     fun getAllBooks(): MutableList<LibraryPublic> {
-        return repository.findAll()
+        return libraryPublicRepository.findAll()
     }
 
     fun getById(id: Long): LibraryPublic? {
-        return repository.findById(id).orElse(null)
+        return libraryPublicRepository.findById(id).orElse(null)
     }
 
     @Transactional
     fun deletePermanently(book: LibraryPublic) {
-        repository.delete(book)
+        libraryPublicRepository.delete(book)
+    }
+
+    @Transactional
+    fun moveToPrivate(book: LibraryPublic): LibraryPrivate {
+        // сохраняем в private
+        val moved = libraryPrivateRepository.save(
+            LibraryPrivate(
+                author = book.author,
+                title = book.title,
+                dateRelease = book.dateRelease
+            )
+        )
+
+        // удаляем из public
+        libraryPublicRepository.delete(book)
+
+        return moved
     }
 }

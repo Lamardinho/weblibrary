@@ -27,7 +27,7 @@ class LibraryController(
     /**
      * Добавляет книгу в [LibraryPublic]
      */
-    @PostMapping("add/public_book")
+    @PostMapping("/add/public_book")
     fun addPublicBook(@RequestBody dto: AddNewBookDTO): CommonBookDTO {
         val book = libraryPublicService.save(
             LibraryPublic(
@@ -42,7 +42,7 @@ class LibraryController(
     /**
      * Добавляет книгу в [LibraryPrivate]
      */
-    @PostMapping("add/private_book")
+    @PostMapping("/add/private_book")
     fun addPrivateBook(@RequestBody dto: AddNewBookDTO): CommonBookDTO {
         val book = libraryPrivateService.save(
             LibraryPrivate(
@@ -57,7 +57,7 @@ class LibraryController(
     /**
      * Редактирует [LibraryPublic]
      */
-    @PatchMapping("edit/public_book")
+    @PatchMapping("/edit/public_book")
     fun editPublicBook(@RequestBody dto: CommonEditBookDTO): ResponseEntity<ResponseBook> {
         val book = libraryPublicService.getById(dto.id)
             ?: return status(HttpStatus.NOT_ACCEPTABLE).body(
@@ -77,7 +77,7 @@ class LibraryController(
     /**
      * Редактирует [LibraryPrivate]
      */
-    @PatchMapping("edit/private_book")
+    @PatchMapping("/edit/private_book")
     fun editPrivateBook(@RequestBody dto: CommonEditBookDTO): ResponseEntity<ResponseBook> {
         val book = libraryPrivateService.getById(dto.id)
             ?: return status(HttpStatus.NOT_ACCEPTABLE).body(
@@ -164,6 +164,42 @@ class LibraryController(
         return allBooksDTOs
     }
 
+    /**
+     * Перемещает из [LibraryPublic] в [LibraryPrivate]
+     */
+    @GetMapping("/move/public_to_private/{book_id}")
+    fun movePublicToPrivate(@PathVariable("book_id") id: Long): ResponseEntity<ResponseBook> {
+        val book = libraryPublicService.getById(id)
+            ?: return status(HttpStatus.NOT_ACCEPTABLE).body(
+                ResponseBook(null, NOT_FIND_BOOK_ID + "$id")
+            )
+
+        val moved = libraryPublicService.moveToPrivate(book)
+        return if (moved.id > 0) {
+            ok().body(ResponseBook(mapperBookToCommonBookDTO(moved), MOVED))
+        } else {
+            status(HttpStatus.NOT_ACCEPTABLE).body(ResponseBook(null, NOT_MOVED))
+        }
+    }
+
+    /**
+     * Перемещает из [LibraryPrivate] в [LibraryPublic]
+     */
+    @GetMapping("/move/private_to_public/{book_id}")
+    fun movePrivateToPublic(@PathVariable("book_id") id: Long): ResponseEntity<ResponseBook> {
+        val book = libraryPrivateService.getById(id)
+            ?: return status(HttpStatus.NOT_ACCEPTABLE).body(
+                ResponseBook(null, NOT_FIND_BOOK_ID + "$id")
+            )
+
+        val moved = libraryPrivateService.moveToPublic(book)
+        return if (moved.id > 0) {
+            ok().body(ResponseBook(mapperBookToCommonBookDTO(moved), MOVED))
+        } else {
+            status(HttpStatus.NOT_ACCEPTABLE).body(ResponseBook(null, NOT_MOVED))
+        }
+    }
+
     //todo: тут по идее я обычно использую mapstruct, но в целях упрощения и более быстрого выполнения задачи
     // mapstruct, validators и т.д. не использую
     private fun mapperCommonEditBookDtoToBook(book: CommonBook, dto: CommonEditBookDTO): CommonBook {
@@ -187,6 +223,8 @@ class LibraryController(
         private const val BOOK_SUCCESSFULLY_EDITED = "Книга успешно отредактирована"
         private const val FAILED_EDIT_BOOK = "Не удалось отредактировать книгу"
         private const val NOT_FIND_BOOK_ID = "Не удалось найти книгу с id: "
+        private const val MOVED = "Книга успешно перемещена"
+        private const val NOT_MOVED = "Не удалось перенести книгу"
     }
 }
 
