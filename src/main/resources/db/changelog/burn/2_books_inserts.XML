@@ -24,6 +24,21 @@
             '1998-05-30', 'Владычица Озера');
             INSERT INTO public.t_public_books (id, author, date_release, title) VALUES (8, 'Анджей Сапковский',
             '2013-05-30', 'Сезон гроз');
+
+            INSERT INTO public.t_private_books (id, author, date_release, title) VALUES (1, 'Джоан Кэтлин Роулинг',
+            '1997-05-30', 'Гарри Поттер и философский камень');
+            INSERT INTO public.t_private_books (id, author, date_release, title) VALUES (2, 'Джоан Кэтлин Роулинг',
+            '1998-05-30', 'Гарри Поттер и Тайная комната');
+            INSERT INTO public.t_private_books (id, author, date_release, title) VALUES (3, 'Джоан Кэтлин Роулинг',
+            '1999-05-30', 'Гарри Поттер и узник Азкабана');
+            INSERT INTO public.t_private_books (id, author, date_release, title) VALUES (4, 'Джоан Кэтлин Роулинг',
+            '2000-05-30', 'Гарри Поттер и Кубок огня');
+            INSERT INTO public.t_private_books (id, author, date_release, title) VALUES (5, 'Джоан Кэтлин Роулинг',
+            '2003-05-30', 'Гарри Поттер и Орден Феникса');
+            INSERT INTO public.t_private_books (id, author, date_release, title) VALUES (6, 'Джоан Кэтлин Роулинг',
+            '2005-05-30', 'Гарри Поттер и Принц-полукровка');
+            INSERT INTO public.t_private_books (id, author, date_release, title) VALUES (7, 'Джоан Кэтлин Роулинг',
+            '2007-05-30', 'Гарри Поттер и Дары Смерти');
         </sql>
     </changeSet>
 </databaseChangeLog>

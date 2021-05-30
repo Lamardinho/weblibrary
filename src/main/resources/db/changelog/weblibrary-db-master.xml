@@ -10,6 +10,6 @@
     <!-- ************************************ СОЗДАЕМ ТАБЛИЦЫ  ***************************************************** -->
     <include file="burn/1_tables.XML" relativeToChangelogFile="true"/>
     <!-- ************************************ НАПОЛНЯЕМ t_public_books  ******************************************** -->
-    <include file="burn/2_books_inserts.XML" relativeToChangelogFile="true"/>
+    <!--<include file="burn/2_books_inserts.XML" relativeToChangelogFile="true"/>-->
 
 </databaseChangeLog>

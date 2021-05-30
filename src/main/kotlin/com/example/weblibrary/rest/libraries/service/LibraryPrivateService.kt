@@ -17,17 +17,16 @@ class LibraryPrivateService(
         return repository.save(book)
     }
 
-    @Transactional
-    fun saveAll(book: List<LibraryPrivate>): MutableList<LibraryPrivate> {
-        return repository.saveAll(book)
+    fun getAllBooks(): MutableList<LibraryPrivate> {
+        return repository.findAll()
+    }
+
+    fun getById(id: Long): LibraryPrivate? {
+        return repository.findById(id).orElse(null)
     }
 
     @Transactional
     fun deletePermanently(book: LibraryPrivate) {
         repository.delete(book)
-    }
-
-    fun getAllBooks(): MutableList<LibraryPrivate> {
-        return repository.findAll()
     }
 }

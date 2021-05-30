@@ -17,17 +17,16 @@ class LibraryPublicService(
         return repository.save(book)
     }
 
-    @Transactional
-    fun saveAll(book: List<LibraryPublic>): MutableList<LibraryPublic> {
-        return repository.saveAll(book)
+    fun getAllBooks(): MutableList<LibraryPublic> {
+        return repository.findAll()
+    }
+
+    fun getById(id: Long): LibraryPublic? {
+        return repository.findById(id).orElse(null)
     }
 
     @Transactional
     fun deletePermanently(book: LibraryPublic) {
         repository.delete(book)
-    }
-
-    fun getAllBooks(): MutableList<LibraryPublic> {
-        return repository.findAll()
     }
 }

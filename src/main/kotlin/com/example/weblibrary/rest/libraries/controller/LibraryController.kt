@@ -19,7 +19,9 @@ class LibraryController(
     private val libraryPublicService: LibraryPublicService,
     private val libraryPrivateService: LibraryPrivateService,
 ) {
-
+    /**
+     * Добавляет книгу в [LibraryPublic]
+     */
     @PostMapping("add/public_book")
     fun addPublicBook(@RequestBody dto: AddNewBookDTO): CommonBooksDTO {
         val book = libraryPublicService.save(
@@ -37,6 +39,9 @@ class LibraryController(
         )
     }
 
+    /**
+     * Добавляет книгу в [LibraryPrivate]
+     */
     @PostMapping("add/private_book")
     fun addPrivateBook(@RequestBody dto: AddNewBookDTO): CommonBooksDTO {
         val book = libraryPrivateService.save(
@@ -52,6 +57,28 @@ class LibraryController(
             author = book.author,
             dateRelease = book.dateRelease
         )
+    }
+
+    /**
+     * Удаляет книгу из [LibraryPublic]
+     */
+    @DeleteMapping("/public_delete/{book_id}")
+    fun deletePublicBook(@PathVariable("book_id") id: Long): String {
+        val book = libraryPublicService.getById(id) ?: return "Не удалось найти книгу с id: $id"
+
+        libraryPublicService.deletePermanently(book)
+        return "Книга ${book.title} успешно удалена"
+    }
+
+    /**
+     * Удаляет книгу из [LibraryPrivate]
+     */
+    @DeleteMapping("/private_delete/{book_id}")
+    fun deletePrivateBook(@PathVariable("book_id") id: Long): String {
+        val book = libraryPrivateService.getById(id) ?: return "Не удалось найти книгу с id: $id"
+
+        libraryPrivateService.deletePermanently(book)
+        return "Книга ${book.title} успешно удалена"
     }
 
     /**
