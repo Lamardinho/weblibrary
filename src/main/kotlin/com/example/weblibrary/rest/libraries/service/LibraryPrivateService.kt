@@ -10,20 +10,24 @@ import javax.transaction.Transactional
  */
 @Service
 class LibraryPrivateService(
-    private val libraryPrivateRepository: LibraryPrivateRepository
+    private val repository: LibraryPrivateRepository
 ) {
     @Transactional
     fun save(book: LibraryPrivate): LibraryPrivate {
-        return libraryPrivateRepository.save(book)
+        return repository.save(book)
     }
 
     @Transactional
     fun saveAll(book: List<LibraryPrivate>): MutableList<LibraryPrivate> {
-        return libraryPrivateRepository.saveAll(book)
+        return repository.saveAll(book)
     }
 
     @Transactional
+    fun deletePermanently(book: LibraryPrivate) {
+        repository.delete(book)
+    }
+
     fun getAllBooks(): MutableList<LibraryPrivate> {
-        return libraryPrivateRepository.findAll()
+        return repository.findAll()
     }
 }
