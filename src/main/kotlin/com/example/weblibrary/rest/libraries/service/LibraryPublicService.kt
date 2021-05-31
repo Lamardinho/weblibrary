@@ -15,7 +15,7 @@ class LibraryPublicService(
     private val libraryPublicRepository: LibraryPublicRepository,
     private val libraryPrivateRepository: LibraryPrivateRepository
 ) {
-    @Transactional
+
     fun save(book: LibraryPublic): LibraryPublic {
         return libraryPublicRepository.save(book)
     }
@@ -28,7 +28,6 @@ class LibraryPublicService(
         return libraryPublicRepository.findById(id).orElse(null)
     }
 
-    @Transactional
     fun deletePermanently(book: LibraryPublic) {
         libraryPublicRepository.delete(book)
     }
